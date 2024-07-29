@@ -57,7 +57,7 @@ const generateAccessAndRefreshTokens = async(userId) => {
     try {
         const foundUser = await user.findById(userId);
         const accessToken = foundUser.generateAccessTokens();
-        const refreshToken = foundUser.generateAccessTokens();
+        const refreshToken = foundUser.generateRefreshTokens();
 
         foundUser.refreshToken = refreshToken;
         await foundUser.save({vaidateBeforeSave : false})
@@ -195,6 +195,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         throw new ApiError(401, error?.message || "Invalid refresh Token")
     }
 } )
+
 export {registerUser, logoutUser, refreshAccessToken};
 export {loginUser};
 export {getAllUsers};
